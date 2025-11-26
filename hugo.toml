@@ -1,0 +1,27 @@
+baseURL = 'https://blog.nancunchild.cn/'
+languageCode = 'zh-cn'
+title = 'NCC Blog on Hugo'
+theme = 'hugo-theme-hello-friend-ng'
+
+enableEmoji = true
+
+[params]
+    description = "这是我的个人博客"
+    author = "NanCunChild"
+    defaultTheme = "auto"
+
+    [params.homeInfoParams]
+        Title = "Hi there 👋"
+        Content = "欢迎来到NCC的新博客，这里是NCC的碎碎念"
+
+[menu]
+    [[menu.main]]
+        identifier = "posts"
+        name = "文章"
+        url = "/posts/"
+        weight = 10
+    [[menu.main]]
+        identifier = "archives"
+        name = "归档"
+        url = "/archives/"
+        weight = 20
