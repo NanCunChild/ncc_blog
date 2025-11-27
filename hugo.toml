@@ -19,6 +19,8 @@ enableEmoji = true
 
     enableSharingButtons = false
     enableGlobalLanguageMenu = true
+    defaultContentLanguage = 'zh'
+    defaultContentLanguageInSubdir = false
 
     defaultTheme = "auto"
 
