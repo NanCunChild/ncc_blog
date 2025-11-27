@@ -6,10 +6,10 @@ pagination.pagerSize = 10
 enableEmoji = true
 
 [params]
-    dateform        = "Nov 27, 2025"
-    dateformShort   = "Nov 27"
-    dateformNum     = "2025-11-27"
-    dateformNumTime = "2025-11-27 11:04"
+    dateform        = "Jan 02, 2006"
+    dateformShort   = "Jan 02"
+    dateformNum     = "2006-01-02"
+    dateformNumTime = "2006-01-02 15:04"
 
     subtitle = "NCC的碎碎念"
     description = "NanCunChild的个人博客，包含生活，技术和幻想"
@@ -17,7 +17,7 @@ enableEmoji = true
     images = ["assets/web_icon.ico"]
     disableReadOtherPosts = false
 
-    enableSharingButtons = true
+    enableSharingButtons = false
     enableGlobalLanguageMenu = true
 
     defaultTheme = "auto"
@@ -33,17 +33,12 @@ enableEmoji = true
         Content = "欢迎来到NCC的新博客，这里是NCC的碎碎念"
     
 
-[taxonomies]
-    category = "blog"
-    tag      = "tags"
-    series   = "series"
-
 [languages]
     [languages.en]
         languageCode = 'en-US'
         languageDirection = 'ltr'
         languageName = 'English'
-        title = 'There is NanCunChild's Blog'
+        title = "There is NanCunChild's Blog"
         weight = 4
         [languages.en.params]
         subtitle = 'English subtitle test'
