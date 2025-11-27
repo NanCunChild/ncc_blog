@@ -1,3 +1,13 @@
+---
+title: "hugo部署小记——基于 Hugo + GitHub Actions 的自动化部署实践，与 i18n 踩坑录"
+date: 2025-11-27T22:38:21+08:00
+draft: false
+toc: false
+images:
+tags:
+  - tech
+---
+
 ## 前言
 NCC换服务器啦！
 
@@ -13,11 +23,13 @@ NCC 想起了 **Hugo**
 ## hugo初始化
 
 Hugo 不像 WordPress 需要复杂的环境，它只是一个命令行工具。运行这个指令可以直接得到它需要的文件结构：
+
 ```bash
 hugo new site . --force
 ```
 
 为了方便后续管理，强烈建议使用 Git 或者你喜欢的版本跟踪器来跟踪整个项目：
+
 ```bash
 git init
 git checkout main
@@ -26,6 +38,7 @@ git commit -m "initialize"
 git remote add origin https://{Change_This_to_Your_Git_Repository_URL}
 git push -u origin main
 ```
+
 ## 选择主题
 
 Hugo选择主题也是一门学问，严格来说这个主题是一个非常重要的生成模板，而且这个Hugo没有所谓开机自带默认主题。可以自己去 `Hugo Theme` 网站选一个看起来喜欢的。
@@ -35,18 +48,21 @@ NCC 最终看中了 [Hello Friend NG](https://github.com/rhazdon/hugo-theme-hell
 安装主题推荐使用 Git Submodule（子模块）的方式，这样方便后续更新：
 
 看中喜欢的主题之后记下它的源码URL，NCC看中了 `hello-friend-ng` 这个主题，安装主题推荐使用 **Git Submodule** 的方式，而不是直接下载解压，这样方便后续跟随作者更新：
+
 ```bash
 git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng themes/hugo-theme-hello-friend-ng
 ```
 
 ## 配置文件
+
 配置文件居然在选择主题之后！是的，因为hugo的配置文件依赖于你选择的主题（感觉有点不太聪明的组织方式）。
 你所需要配置的文件只有`hugo.toml`这一个，这回指导hugo进行所有任务。
 
 **注意**：配置文件里有一个 `dateFrom` 相关的日期格式，这是一个 Go 语言特有的“魔法数字”。NCC 起初以为要改成当前日期，还在思考怎么这个项目从 2006 年就开始了，结果一改就导致博客前端日期全崩了。后来查阅官方文档才知道，**2006 年 1 月 2 日 15 点 04 分** 是 Go 语言的时间格式化标准，不能乱动。
 
 随后就可以在`hugo.toml`里面指定 `theme = 'hugo-theme-hello-friend-ng'` 了。以下是 NCC 踩坑后总结出的 **生产环境可用配置**（解决了后面提到的多语言路由问题）：
-```
+
+```toml
 baseURL = 'https://blog.nancunchild.cn/'
 languageCode = 'zh-CN'
 title = 'NanCunChild的碎碎念'
@@ -56,7 +72,7 @@ defaultContentLanguage = 'zh-cn' # 加入这个可以让访问中文博客时路
 defaultContentLanguageInSubdir = false
 
 [params]
-	# 不要手欠改日期
+    #不要手欠改日期
     dateform        = "Jan 02, 2006"
     dateformShort   = "Jan 02"
     dateformNum     = "2006-01-02"
@@ -81,7 +97,7 @@ defaultContentLanguageInSubdir = false
     
 
 [languages]
-	# 这里需要是zh-cn，而不是zh短码
+    #这里需要是zh-cn，而不是zh短码
     [languages.zh-cn]
         languageCode = 'zh-CN'
         languageName = '中文'
@@ -164,9 +180,8 @@ defaultContentLanguageInSubdir = false
             weight = 20
 ```
 
-
-
 而且还可以注意一下，如果不准备使用多语言，可以不管`[language]`标签，直接使用`[menu]` 标签即可，同时设置 `enableGlobalLanguageMenu = false` ：
+
 ```toml
 [menu]
     [[menu.main]]
@@ -182,11 +197,13 @@ defaultContentLanguageInSubdir = false
 ```
 
 ## 自动化上传博客
+
 上传博客有多种方式，平时写博客就只需要一个符合hugo标准的markdown文件，通过hugo编译好之后放在服务器上，你配置的nginx会很听话地照顾这些静态文件。而我们的目标是让这个过程变优雅。
 
 首先，写博客当然在本地，NCC推荐VS Code安装MD扩展、以及Obsidian两款软件来写。使用VSCode可以在任意地方写，然后自己使用喜欢的版本控制软件管理。使用Obsidian的话它会有一个Vault位置用于存放，而且登录账户了似乎可以云存储。两个在管理上都非常不错，在操作习惯和界面上各有千秋。不过NCC总是觉得Obsidian的界面很不错，简单从而不会分心，自带无需配置的快速预览，面对这样的界面更能专注写文章。
 
 第二步，将Markdown格式的博客原文使用hugo编译为网站代码。这一步说法就超多啦！本地下载一个hugo，写完就编译，还能本地查看，满意之后就使用自己喜欢的方式传入服务器，应该是大多数人的选择。不过NCC喜欢更符合工作流的方式，就是希望版本管理和远程同步能一键完成而不是胶水粘合，此时看来使用git是一个非常不错的选择，于是在开始提出两种方案：
+
 - 本地编写，使用git push到服务器上，服务器检测到仓库变动就马上唤起hugo编译部署，一气呵成。
 - 本地编写，使用git push到GitHub，GitHub帮忙编译之后使用某些方法传到服务器上。
 
@@ -194,6 +211,7 @@ NCC第一次接触Hugo，误以为编译时间会比较长，可能比较消耗�
 所以目前的情况是这样的：NCC在终端写好博客，使用git上传到GitHub，GitHub上的CI/CD发力编译出成品，然后使用ssh链接到NCC的服务器，使用rsync同步编译文件。
 
 这里是NCC的workflow文件，大家可以抄抄作业：
+
 ```yml
 name: Deploy Hugo to NCC Server
 
@@ -242,12 +260,15 @@ jobs:
 接下来记得给GitHub创建一个非特权账户，然后指定SSH密钥之后，将私钥导入进这个项目的SecretVariable里面，它会替换这里面的变量值，同时也防止别人看到。永远记住权限最小原则，只允许GitHub上传用的用户使用这个网站目录，必要时可以使用SELinux安全上下文约束它。
 
 ## 遇到i18n
+
 NCC以为一切已经落定，只剩下i18n这朵乌云也是优化配置很快可以解决的时候。i18n和历史遗留问题给NCC迎面一拳。NCC使用了中文，英文，日语三国语言，准备之后给每篇博客都配三语内容，但是发现英文可以索引到正确文章，日语也可以，就只有中文不行，只要访问中文博客和路径，就会变成404，或者回退到英文显示。接下来就是为期2小时的翻源码，找引用，拆开i18n，逐行核对Nginx配置，问Gemini的时间。最终找到一个可疑点，询问Gemini后发现就是问题所在。
 
 i18n中定义的简体中文文件名是 `zh-CN.toml`，所以不能简单在配置文件中指定 `[languageCode = 'zh']`，而必须是 `[languageCode = 'zh-cn']`。因为此外还有 `zh-tw`, `zh-hk` 等。在其它国家语言代码都只有两位的时候，这玩意有4位。而且之后写中文博客还需要添加 `.zh-cn.md` 后缀才行。
 
 ## 目前情况
+
 现在，NCC 的博客完全运行在 Docker 容器中的 Nginx 上。
+
 - **性能**：10 个并发访问时 CPU 占用不足 5%，秒开。
 - **安全**：静态文件天然免疫 SQL 注入和 PHP 漏洞。
 - **体验**：本地 Obsidian 写作 -> Git Push -> 全自动上线。

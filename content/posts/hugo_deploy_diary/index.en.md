@@ -1,4 +1,15 @@
-#### Intro: Breaking Up with My Server
+---
+title: "hugo部署小记——基于 Hugo + GitHub Actions 的自动化部署实践，与 i18n 踩坑录"
+date: 2025-11-27T22:38:21+08:00
+draft: false
+toc: false
+images:
+tags:
+  - tech
+---
+
+
+## Intro: Breaking Up with My Server
 
 Big news: NCC has moved house!
 
@@ -13,7 +24,7 @@ Then I remembered the static site gang: Hexo, Hugo, etc. Perfect for CDN caching
 If WordPress is a slow-motion chef cooking every meal to order, Hugo is a gigafactory. It pre-compiles all your articles into static HTML "Meal Prep." When a guest arrives, Nginx just serves the plate.  
 This architecture is so efficient that even a PC from the Windows 95 era could run it. Pair it with a CDN, and you’re looking at **zero-cost scaling**. Blazingly fast. 🔥
 
-#### Hugo Initialization (hugo初始化)
+## Hugo Initialization
 
 Hugo isn't high-maintenance like WordPress. It's just a CLI tool. Run this, and boom, you have a file structure:
 
@@ -32,8 +43,7 @@ git remote add origin https://{Change_This_to_Your_Git_Repository_URL}
 git push -u origin main
 ```
 
-
-#### Picking a Theme: The Tinder of Tech
+## Picking a Theme: The Tinder of Tech
 
 Choosing a Hugo theme is a whole discipline. Strictly speaking, it's a template, but Hugo comes naked (no default theme). You have to go shopping on the `Hugo Themes` site.  
 But here's the **red flag**: A lot of themes are maintained by random people in the open-source community. Quality varies wildy. Don't just swipe right because it looks pretty. Check the **GitHub Stars**, **Issue activity**, and **Docs**. Otherwise, you'll end up debugging someone else's spaghetti code at 3 AM.
@@ -45,8 +55,7 @@ Pro tip: Install it via **Git Submodule**. Don't just download the zip file like
 git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng themes/hugo-theme-hello-friend-ng
 ```
 
-
-#### The Config File: Go's "Magic Number" (配置文件)
+## The Config File: Go's "Magic Number"
 
 The config comes _after_ the theme? Yeah, Hugo is quirky like that. You only need to touch `hugo.toml`.
 
@@ -173,7 +182,7 @@ defaultContentLanguageInSubdir = false
             weight = 20
 ```
 
-#### Automating the Deploy: Work Smarter, Not Harder
+## Automating the Deploy: Work Smarter, Not Harder
 
 The goal is an elegant workflow.  
 Writing happens locally. NCC recommends VS Code (with Markdown extensions) or **Obsidian**. Obsidian is basically a second brain; the UI is distraction-free, letting you enter a "flow state."
@@ -231,7 +240,7 @@ jobs:
 
 **Security Check**: Create a dedicated, low-privilege user on your server for this. Least Privilege Principle, folks. Don't let GitHub have root access, or you're gonna have a bad time.
 
-#### The Final Boss: i18n
+## The Final Boss: i18n
 
 I thought I was done. I thought I could touch grass. But then **i18n** (internationalization) punched me in the face.  
 I set up English, Japanese, and Chinese. English worked. Japanese worked. Chinese? **404 Not Found**.  
@@ -241,7 +250,7 @@ The culprit?
 The Simplified Chinese file is named `zh-CN.toml`. In the config, I had `languageCode = 'zh'`. It _needed_ to be `zh-cn`.  
 While other languages have 2-letter codes, Chinese needs 4. And I have to append `.zh-cn.md` to my filenames. **Case sensitivity** is the real villain here. So, just check if your first language has the same situation like this.
 
-#### Current Status
+## Current Status
 
 Now, NCC's blog is running inside a Dockerized Nginx container.
 
