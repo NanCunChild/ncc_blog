@@ -39,7 +39,7 @@ enableEmoji = true
     series   = "series"
 
 [languages]
-    [languages.en]
+    [languages.English]
         languageCode = 'en-US'
         languageDirection = 'ltr'
         languageName = 'English'
@@ -50,7 +50,7 @@ enableEmoji = true
         [languages.en.params.contact]
             email = 'nancunchild@gmail.com'
 
-    [languages.zh]
+    [languages.中文]
         languageCode = 'zh-CN'
         languageDirection = 'ltr'
         languageName = 'Chinese'
