@@ -39,26 +39,37 @@ enableEmoji = true
     series   = "series"
 
 [languages]
-    [languages.English]
+    [languages.en]
         languageCode = 'en-US'
         languageDirection = 'ltr'
         languageName = 'English'
         title = 'English title test'
-        weight = 2
+        weight = 4
         [languages.en.params]
         subtitle = 'English subtitle test'
         [languages.en.params.contact]
             email = 'nancunchild@gmail.com'
 
-    [languages.中文]
+    [languages.zh]
         languageCode = 'zh-CN'
         languageDirection = 'ltr'
         languageName = 'Chinese'
         title = '中文标题测试'
-        weight = 2
+        weight = 4
         [languages.zh.params]
         subtitle = '中文副标题测试'
         [languages.zh.params.contact]
+            email = 'nancunchild@gmail.com'
+
+    [languages.ja]
+        languageCode = 'ja-JP'
+        languageDirection = 'ltr'
+        languageName = 'Japanese'
+        title = '日本語のタイトルテスト'
+        weight = 4
+        [languages.ja.params]
+        subtitle = '日本語の字幕テスト'
+        [languages.ja.params.contact]
             email = 'nancunchild@gmail.com'
 
 [menu]
