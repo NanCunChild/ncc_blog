@@ -34,47 +34,71 @@ enableEmoji = true
     
 
 [languages]
-    [languages.en]
-        languageCode = 'en-US'
-        languageDirection = 'ltr'
-        languageName = 'English'
-        title = "There is NanCunChild's Blog"
-        weight = 4
-        [languages.en.params]
-        subtitle = 'English subtitle test'
-        [languages.en.params.contact]
-            email = 'nancunchild@gmail.com'
-
     [languages.zh]
         languageCode = 'zh-CN'
-        languageDirection = 'ltr'
-        languageName = 'Chinese'
-        title = 'NanCunChild的碎碎念博客'
-        weight = 4
+        languageName = '中文'
+        weight = 1
+        title = 'NanCunChild的碎碎念'
         [languages.zh.params]
-        subtitle = '这个副标题是干嘛的'
-        [languages.zh.params.contact]
-            email = 'nancunchild@gmail.com'
+            subtitle = '生活、技术与幻想'
+        [[languages.zh.menu.main]]
+            identifier = "about"
+            name = "关于我"
+            url = "/about/"
+            weight = 5
+        [[languages.zh.menu.main]]
+            identifier = "posts"
+            name = "文章"
+            url = "/posts/"
+            weight = 10
+        [[languages.zh.menu.main]]
+            identifier = "archives"
+            name = "归档"
+            url = "/archives/"
+            weight = 20
+
+    [languages.en]
+        languageCode = 'en-US'
+        languageName = 'English'
+        weight = 2
+        title = "NanCunChild's Blog"
+        [languages.en.params]
+            subtitle = 'Tech, Life and Fantasy'
+        [[languages.en.menu.main]]
+            identifier = "about"
+            name = "About"
+            url = "/about/"
+            weight = 5
+        [[languages.en.menu.main]]
+            identifier = "posts"
+            name = "Posts"
+            url = "/posts/"
+            weight = 10
+        [[languages.en.menu.main]]
+            identifier = "archives"
+            name = "Archives"
+            url = "/archives/"
+            weight = 20
 
     [languages.ja]
         languageCode = 'ja-JP'
-        languageDirection = 'ltr'
-        languageName = 'Japanese'
+        languageName = '日本語'
+        weight = 3
         title = 'NanCunChildのブログ'
-        weight = 4
         [languages.ja.params]
-        subtitle = '日本語の字幕テスト'
-        [languages.ja.params.contact]
-            email = 'nancunchild@gmail.com'
-
-[menu]
-    [[menu.main]]
-        identifier = "posts"
-        name = "文章"
-        url = "/posts/"
-        weight = 10
-    [[menu.main]]
-        identifier = "archives"
-        name = "归档"
-        url = "/archives/"
-        weight = 20
+            subtitle = '生活、技術とファンタジー'
+        [[languages.ja.menu.main]]
+            identifier = "about"
+            name = "プロフィール"
+            url = "/about/"
+            weight = 5
+        [[languages.ja.menu.main]]
+            identifier = "posts"
+            name = "記事一覧"
+            url = "/posts/"
+            weight = 10
+        [[languages.ja.menu.main]]
+            identifier = "archives"
+            name = "アーカイブ"
+            url = "/archives/"
+            weight = 20
