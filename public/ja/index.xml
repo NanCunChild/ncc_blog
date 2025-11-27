@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NanCunChildのブログ</title>
+    <link>http://localhost:1313/ja/</link>
+    <description>Recent content on NanCunChildのブログ</description>
+    <generator>Hugo</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Thu, 27 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/ja/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>私について</title>
+      <link>http://localhost:1313/ja/about/</link>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/ja/about/</guid>
+      <description>&lt;p&gt;ちかしょうがよ&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>アーカイブ</title>
+      <link>http://localhost:1313/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/archives/</guid>
+      <description>archives</description>
+    </item>
+  </channel>
+</rss>
