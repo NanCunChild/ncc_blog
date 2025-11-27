@@ -20,13 +20,13 @@ enableEmoji = true
     enableSharingButtons = true
     enableGlobalLanguageMenu = true
 
+    defaultTheme = "auto"
+
     [params.author]
         name = "NanCunChild"
 
     [params.contact]
         email = 'nancunchild@gmail.com'
-
-    defaultTheme = "auto"
 
     [params.homeInfoParams]
         Title = "Hi there 👋"
@@ -38,17 +38,28 @@ enableEmoji = true
     tag      = "tags"
     series   = "series"
 
-[languages.en]
-    languageCode = 'en-US'
-    languageDirection = 'ltr'
-    languageName = 'English'
-    title = 'English title test'
-    weight = 2
-    [languages.en.params]
-      subtitle = 'English subtitle test'
-      [languages.en.params.contact]
-        email = 'nancunchild@gmail.com'
+[languages]
+    [languages.en]
+        languageCode = 'en-US'
+        languageDirection = 'ltr'
+        languageName = 'English'
+        title = 'English title test'
+        weight = 2
+        [languages.en.params]
+        subtitle = 'English subtitle test'
+        [languages.en.params.contact]
+            email = 'nancunchild@gmail.com'
 
+    [languages.zh]
+        languageCode = 'zh-CN'
+        languageDirection = 'ltr'
+        languageName = 'Chinese'
+        title = '中文标题测试'
+        weight = 2
+        [languages.zh.params]
+        subtitle = '中文副标题测试'
+        [languages.zh.params.contact]
+            email = 'nancunchild@gmail.com'
 
 [menu]
     [[menu.main]]
