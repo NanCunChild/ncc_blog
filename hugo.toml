@@ -7,7 +7,9 @@ enableEmoji = true
 
 [params]
     description = "这是我的个人博客"
-    author = ["NanCunChild"]
+    [params.author]
+        name = "NanCunChild"
+        email = "nancunchild@gmail.com"
     defaultTheme = "auto"
 
     [params.homeInfoParams]
