@@ -1,9 +1,10 @@
 baseURL = 'https://blog.nancunchild.cn/'
-languageCode = 'zh-cn'
+languageCode = 'zh-CN'
 title = 'NanCunChild的碎碎念'
 theme = 'hugo-theme-hello-friend-ng'
 pagination.pagerSize = 10
-
+defaultContentLanguage = 'zh'
+defaultContentLanguageInSubdir = false
 
 [params]
     dateform        = "Jan 02, 2006"
@@ -19,8 +20,6 @@ pagination.pagerSize = 10
 
     enableSharingButtons = false
     enableGlobalLanguageMenu = true
-    defaultContentLanguage = 'zh'
-    defaultContentLanguageInSubdir = false
 
     defaultTheme = "auto"
 
@@ -29,10 +28,6 @@ pagination.pagerSize = 10
 
     [params.contact]
         email = 'nancunchild@gmail.com'
-
-    [params.homeInfoParams]
-        Title = "Hi there 👋"
-        Content = "欢迎来到NCC的新博客，这里是NCC的碎碎念"
     
 
 [languages]
@@ -43,6 +38,10 @@ pagination.pagerSize = 10
         title = 'NanCunChild的碎碎念'
         [languages.zh.params]
             subtitle = '生活、技术与幻想'
+            [languages.zh.params.homeInfoParams]
+                Title = "你好 👋"
+                Content = "欢迎来到NCC的碎碎念"
+
         [[languages.zh.menu.main]]
             identifier = "about"
             name = "关于我"
@@ -66,20 +65,24 @@ pagination.pagerSize = 10
         title = "NanCunChild's Blog"
         [languages.en.params]
             subtitle = 'Tech, Life and Fantasy'
+            [languages.en.params.homeInfoParams]
+                Title = "Hi there 👋"
+                Content = "Welcome to NCC's Blog"
+
         [[languages.en.menu.main]]
             identifier = "about"
             name = "About"
-            url = "/about/"
+            url = "/en/about/"
             weight = 5
         [[languages.en.menu.main]]
             identifier = "posts"
             name = "Posts"
-            url = "/posts/"
+            url = "/en/posts/"
             weight = 10
         [[languages.en.menu.main]]
             identifier = "archives"
             name = "Archives"
-            url = "/archives/"
+            url = "/en/archives/"
             weight = 20
 
     [languages.ja]
@@ -89,18 +92,22 @@ pagination.pagerSize = 10
         title = 'NanCunChildのブログ'
         [languages.ja.params]
             subtitle = '生活、技術とファンタジー'
+            [languages.ja.params.homeInfoParams]
+                Title = "こんにちは 👋"
+                Content = "NCCのブログへようこそ"
+
         [[languages.ja.menu.main]]
             identifier = "about"
             name = "プロフィール"
-            url = "/about/"
+            url = "/ja/about/"
             weight = 5
         [[languages.ja.menu.main]]
             identifier = "posts"
             name = "記事一覧"
-            url = "/posts/"
+            url = "/ja/posts/"
             weight = 10
         [[languages.ja.menu.main]]
             identifier = "archives"
             name = "アーカイブ"
-            url = "/archives/"
+            url = "/ja/archives/"
             weight = 20
