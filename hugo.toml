@@ -1,8 +1,9 @@
 baseURL = 'https://blog.nancunchild.cn/'
 languageCode = 'zh-cn'
 title = 'NanCunChild的碎碎念'
-theme = 'hello-friend-ng'
+theme = 'hugo-theme-hello-friend-ng'
 pagination.pagerSize = 10
+
 
 [params]
     dateform        = "Jan 02, 2006"
