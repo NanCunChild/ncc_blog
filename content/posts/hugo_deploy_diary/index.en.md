@@ -1,5 +1,5 @@
 ---
-title: "hugo部署小记——基于 Hugo + GitHub Actions 的自动化部署实践，与 i18n 踩坑录"
+title: "Breaking Up with My ex Server and fall in love with new one, with Hugo!"
 date: 2025-11-27T22:38:21+08:00
 draft: false
 toc: false
