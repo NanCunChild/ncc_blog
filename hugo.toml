@@ -1,20 +1,54 @@
 baseURL = 'https://blog.nancunchild.cn/'
 languageCode = 'zh-cn'
-title = 'NCC Blog on Hugo'
+title = 'NanCunChild的碎碎念'
 theme = 'hugo-theme-hello-friend-ng'
-
+pagination.pagerSize = 10
 enableEmoji = true
 
 [params]
-    description = "这是我的个人博客"
+    dateform        = "Nov 27, 2025"
+    dateformShort   = "Nov 27"
+    dateformNum     = "2025-11-27"
+    dateformNumTime = "2025-11-27 11:04"
+
+    subtitle = "NCC的碎碎念"
+    description = "NanCunChild的个人博客，包含生活，技术和幻想"
+    keywords = "homepage, blog, nancunchild, tech"
+    images = ["assets/web_icon.ico"]
+    disableReadOtherPosts = false
+
+    enableSharingButtons = true
+    enableGlobalLanguageMenu = true
+
     [params.author]
         name = "NanCunChild"
-        email = "nancunchild@gmail.com"
+
+    [params.contact]
+        email = 'nancunchild@gmail.com'
+
     defaultTheme = "auto"
 
     [params.homeInfoParams]
         Title = "Hi there 👋"
         Content = "欢迎来到NCC的新博客，这里是NCC的碎碎念"
+    
+
+[taxonomies]
+    category = "blog"
+    tag      = "tags"
+    series   = "series"
+
+[languages.en]
+    languageCode = 'en-US'
+    languageDirection = 'ltr'
+    languageName = 'English'
+    title = 'English title test'
+    weight = 2
+    [languages.en.params]
+      subtitle = 'English subtitle test'
+      [languages.en.params.contact]
+        email = 'nancunchild@gmail.com'
+
 
 [menu]
     [[menu.main]]
