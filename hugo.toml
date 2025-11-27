@@ -36,23 +36,23 @@ defaultContentLanguageInSubdir = false
         languageName = '中文'
         weight = 1
         title = 'NanCunChild的碎碎念'
-        [languages.zh.params]
+        [languages.zh-cn.params]
             subtitle = '生活、技术与幻想'
             [languages.zh.params.homeInfoParams]
                 Title = "你好 👋"
                 Content = "欢迎来到NCC的碎碎念"
 
-        [[languages.zh.menu.main]]
+        [[languages.zh-cn.menu.main]]
             identifier = "about"
             name = "关于我"
             url = "/about/"
             weight = 5
-        [[languages.zh.menu.main]]
+        [[languages.zh-cn.menu.main]]
             identifier = "posts"
             name = "文章"
             url = "/posts/"
             weight = 10
-        [[languages.zh.menu.main]]
+        [[languages.zh-cn.menu.main]]
             identifier = "archives"
             name = "归档"
             url = "/archives/"
