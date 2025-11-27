@@ -1,6 +1,7 @@
 ---
 title: "アーカイブ"
 layout: "archives"
-url: "/archives/"
+translationKey: "archive-page"
+url: "/ja/archives/"
 summary: "archives"
 ---
