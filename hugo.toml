@@ -3,7 +3,7 @@ languageCode = 'zh-CN'
 title = 'NanCunChild的碎碎念'
 theme = 'hugo-theme-hello-friend-ng'
 pagination.pagerSize = 10
-defaultContentLanguage = 'zh'
+defaultContentLanguage = 'zh-cn'
 defaultContentLanguageInSubdir = false
 
 [params]
