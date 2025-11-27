@@ -45,17 +45,17 @@ defaultContentLanguageInSubdir = false
         [[languages.zh.menu.main]]
             identifier = "about"
             name = "关于我"
-            url = "/zh/about/"
+            url = "/about/"
             weight = 5
         [[languages.zh.menu.main]]
             identifier = "posts"
             name = "文章"
-            url = "/zh/posts/"
+            url = "/posts/"
             weight = 10
         [[languages.zh.menu.main]]
             identifier = "archives"
             name = "归档"
-            url = "/zh/archives/"
+            url = "/archives/"
             weight = 20
 
     [languages.en]
