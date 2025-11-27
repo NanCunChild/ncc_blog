@@ -43,7 +43,7 @@ enableEmoji = true
         languageCode = 'en-US'
         languageDirection = 'ltr'
         languageName = 'English'
-        title = 'English title test'
+        title = 'There is NanCunChild's Blog'
         weight = 4
         [languages.en.params]
         subtitle = 'English subtitle test'
@@ -54,10 +54,10 @@ enableEmoji = true
         languageCode = 'zh-CN'
         languageDirection = 'ltr'
         languageName = 'Chinese'
-        title = '中文标题测试'
+        title = 'NanCunChild的碎碎念博客'
         weight = 4
         [languages.zh.params]
-        subtitle = '中文副标题测试'
+        subtitle = '这个副标题是干嘛的'
         [languages.zh.params.contact]
             email = 'nancunchild@gmail.com'
 
@@ -65,7 +65,7 @@ enableEmoji = true
         languageCode = 'ja-JP'
         languageDirection = 'ltr'
         languageName = 'Japanese'
-        title = '日本語のタイトルテスト'
+        title = 'NanCunChildのブログ'
         weight = 4
         [languages.ja.params]
         subtitle = '日本語の字幕テスト'
