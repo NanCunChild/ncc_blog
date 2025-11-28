@@ -19,7 +19,6 @@ defaultContentLanguageInSubdir = false
     disableReadOtherPosts = false
     enableSharingButtons = false
     enableGlobalLanguageMenu = true
-	enableComments = true
 	disableComments = false
 
     defaultTheme = "auto"

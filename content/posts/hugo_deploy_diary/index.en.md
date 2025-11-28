@@ -6,6 +6,7 @@ toc: false
 images:
 tags:
   - tech
+description: "Goodbye slow WordPress, hello fast Hugo! This post details the full migration of NCC's blog from Aliyun to Hostdare. Learn how to build a static site with Hugo, configure the 'Hello Friend NG' theme, and automate deployment via GitHub Actions. Includes critical troubleshooting tips for Go's date formatting magic numbers and fixing 404 errors in multi-language (i18n) routing configurations. "
 ---
 
 

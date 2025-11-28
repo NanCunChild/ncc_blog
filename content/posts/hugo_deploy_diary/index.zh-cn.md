@@ -6,6 +6,7 @@ toc: false
 images:
 tags:
   - tech
+description: "告别臃肿的WordPress和阿里云，NCC博客正式迁移至Hostdare并重构为Hugo静态站点。本文详细记录了从Hugo初始化、Hello Friend NG主题配置，到使用GitHub Actions实现自动化部署（CI/CD）的全过程。重点分享了生产环境下的配置避坑指南，包括Go语言时间格式的“魔法数字”陷阱，以及解决多语言（i18n）中文路径404问题的关键设置。"
 ---
 
 ## 前言

@@ -6,6 +6,7 @@ toc: false
 images:
 tags:
   - tech
+description: "WordPressからHugoへ。阿里云からHostdareへのサーバー移転と、Docker+Nginxによる爆速静的サイト構築の完全ガイドです。Hello Friend NGテーマの設定、GitHub Actionsを用いたCI/CD自動デプロイの構築手順を解説。さらに、初心者がハマりやすいGo言語の日付フォーマットの罠や、多言語化（i18n）におけるルーティングエラーの解決策など、実用的な技術Tipsを共有します。"
 ---
 
 さらば、NCCの重いサーバーよ～　NCC、サーバー引っ越しました！
