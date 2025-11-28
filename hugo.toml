@@ -14,12 +14,13 @@ defaultContentLanguageInSubdir = false
 
     subtitle = "NCC的碎碎念"
     description = "NanCunChild的个人博客，包含生活，技术和幻想"
-    keywords = "homepage, blog, nancunchild, tech"
+    keywords = "homepage, blog, nancunchild, tech, diary"
     images = ["assets/web_icon.ico"]
     disableReadOtherPosts = false
-
     enableSharingButtons = false
     enableGlobalLanguageMenu = true
+	enableComments = true
+	disableComments = false
 
     defaultTheme = "auto"
 
