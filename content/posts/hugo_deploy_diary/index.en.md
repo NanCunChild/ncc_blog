@@ -15,7 +15,7 @@ description: "Goodbye slow WordPress, hello fast Hugo! This post details the ful
 Big news: NCC has moved house!
 
 It started when Alibaba Cloud slid into my DMs like a bureaucratic ex, demanding I fix some ICP filing I forgot years ago. I tried to re-apply multiple times, but got rejected every time (turns out I checked the wrong jurisdiction box... **massive facepalm**).  
-On top of that, my old 200M server was running like a **potato**. It was lagging so hard I thought I was on dial-up. So, I found Hostdare's CN2 GIA route in the US. $12 a month, no lag, and bandwidth that actually works? **Stonks**. 📈
+On top of that, my old 200M server was running like a **potato** (This server does not being promised with any mininum bandwith, they just tell you the peak is 200Mbps). It was lagging so hard I thought I was on dial-up. So, I found Hostdare's CN2 GIA route in the US. $12 a month, no lag, and bandwidth that actually works? **Stonks**. 📈
 
 While backing up, I realized my old WordPress blog was a dinosaur. Every page load was a spinning wheel of death. The PHP backend was working overtime just to render a header. It felt bloated.  
 Then I remembered the static site gang: Hexo, Hugo, etc. Perfect for CDN caching and speed. Plus, I get to **Marie Kondo** (delete) all those weird WordPress features I never use. It sparks joy.
