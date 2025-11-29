@@ -6,7 +6,7 @@ toc: false
 images:
 tags:
   - daydream
-description: "He mocks her loss of dignity, only to realize he is doing the exact same thing. A story about how, across centuries, we all stick a "For Sale" sign on our heads, calling it survival."
+description: "He mocks her loss of dignity, only to realize he is doing the exact same thing. A story about how, across centuries, we all stick a 'For Sale' sign on our heads, calling it survival."
 ---
 
 **The 15th Year of the Chongzhen Reign (1642).**  
