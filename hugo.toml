@@ -29,6 +29,9 @@ defaultContentLanguageInSubdir = false
     [params.contact]
         email = 'nancunchild@gmail.com'
     
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+    section = ["HTML", "RSS"]
 
 [languages]
     [languages.zh-cn]
@@ -38,7 +41,7 @@ defaultContentLanguageInSubdir = false
         title = 'NanCunChild的碎碎念'
         [languages.zh-cn.params]
             subtitle = '生活、技术与幻想'
-            [languages.zh.params.homeInfoParams]
+            [languages.zh-cn.params.homeInfoParams]
                 Title = "你好 👋"
                 Content = "欢迎来到NCC的碎碎念"
 
@@ -72,17 +75,17 @@ defaultContentLanguageInSubdir = false
         [[languages.en.menu.main]]
             identifier = "about"
             name = "About"
-            url = "/en/about/"
+            url = "/about/"
             weight = 5
         [[languages.en.menu.main]]
             identifier = "posts"
             name = "Posts"
-            url = "/en/posts/"
+            url = "/posts/"
             weight = 10
         [[languages.en.menu.main]]
             identifier = "archives"
             name = "Archives"
-            url = "/en/archives/"
+            url = "/archives/"
             weight = 20
 
     [languages.ja]
@@ -99,15 +102,15 @@ defaultContentLanguageInSubdir = false
         [[languages.ja.menu.main]]
             identifier = "about"
             name = "プロフィール"
-            url = "/ja/about/"
+            url = "/about/"
             weight = 5
         [[languages.ja.menu.main]]
             identifier = "posts"
             name = "記事一覧"
-            url = "/ja/posts/"
+            url = "/posts/"
             weight = 10
         [[languages.ja.menu.main]]
             identifier = "archives"
             name = "アーカイブ"
-            url = "/ja/archives/"
+            url = "/archives/"
             weight = 20

@@ -1,26 +1,59 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>NanCunChild&#39;s Blog</title>
     <link>http://localhost:1313/en/</link>
     <description>Recent content on NanCunChild&#39;s Blog</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 27 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <lastBuildDate>Mon, 08 Dec 2025 23:16:10 +0800</lastBuildDate>
+    
+        <atom:link href="http://localhost:1313/en/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
-      <title>about</title>
+      <title>Posts</title>
+      <link>http://localhost:1313/en/posts/</link>
+      <pubDate>Mon, 08 Dec 2025 23:16:10 +0800</pubDate>
+      
+      <guid>http://localhost:1313/en/posts/</guid>
+      
+      <description></description>
+      
+      <content:encoded>
+        <![CDATA[]]>
+      </content:encoded>
+    </item>
+    
+    <item>
+      <title>About</title>
       <link>http://localhost:1313/en/about/</link>
       <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      
       <guid>http://localhost:1313/en/about/</guid>
+      
       <description>&lt;p&gt;self introduction test&lt;/p&gt;</description>
+      
+      <content:encoded>
+        <![CDATA[<p>self introduction test</p>
+]]>
+      </content:encoded>
     </item>
+    
     <item>
       <title>Archives</title>
-      <link>http://localhost:1313/archives/</link>
+      <link>http://localhost:1313/en/archives/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/archives/</guid>
+      
+      <guid>http://localhost:1313/en/archives/</guid>
+      
       <description>archives</description>
+      
+      <content:encoded>
+        <![CDATA[]]>
+      </content:encoded>
     </item>
+    
   </channel>
 </rss>
