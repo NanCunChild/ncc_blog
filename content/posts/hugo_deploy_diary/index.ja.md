@@ -106,7 +106,7 @@ defaultContentLanguageInSubdir = false
         title = 'NanCunChild的碎碎念'
         [languages.zh-cn.params]
             subtitle = '生活、技术与幻想'
-            [languages.zh.params.homeInfoParams]
+            [languages.zh-cn.params.homeInfoParams]
                 Title = "你好 👋"
                 Content = "欢迎来到NCC的碎碎念"
 
