@@ -1,0 +1,15 @@
+{
+    "name": "NanCunChild的碎碎念",
+    "short_name": "NCC Blog",
+    "start_url": "/",
+    "background_color": "#2a2a2a",
+    "theme_color": "#2a2a2a",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/assets/web_icon.ico",
+            "sizes": "any",
+            "type": "image/x-icon"
+        }
+    ]
+}
