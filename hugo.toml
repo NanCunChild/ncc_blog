@@ -25,6 +25,7 @@ defaultContentLanguageInSubdir = false
 
     [params.author]
         name = "NanCunChild"
+        email = "nancunchild@gmail.com"
 
     [params.contact]
         email = 'nancunchild@gmail.com'
