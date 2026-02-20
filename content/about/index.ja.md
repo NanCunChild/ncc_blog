@@ -6,7 +6,7 @@ translationKey: "about-page"
 outputs: ["HTML"]
 ---
 
-はじめまして、Miramimura です！
+はじめまして、南村さん です！
 
 閲覧ありがとうございます！
 NCCこと、NanCunChild（ナン・クン・チャイルド）です。日本の友人からはよく「Minamimura（みなみむら）」と呼ばれています。気軽にそう呼んでいただけると嬉しいです！
