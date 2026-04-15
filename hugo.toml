@@ -1,4 +1,4 @@
-baseURL = 'https://blog.nancunchild.cn/'
+baseURL = 'https://blog.nancunchild.me/'
 languageCode = 'zh-CN'
 title = 'NanCunChild的碎碎念'
 theme = 'hugo-theme-hello-friend-ng'
