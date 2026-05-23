@@ -399,10 +399,61 @@ FUN_000029f0(acStack_168,IMAGE_DOS_HEADER_00000000.e_program + 0xc0,(char *)unaf
 
 反编译显示 handler 调用 `AsciiStrnCatS(buf_msg, DestMax, user_input, AsciiStrLen(user_input))` 。 该函数即 EDK2 SafeString 库中的标准实现，4 参数，语义是: 实际拷贝字节数 = `min(Length, DestMax - AsciiStrLen(Destination) - 1)`
 
-第 2 个参数 DestMax 在反编译中显示为 IMAGE_DOS_HEADER_00000000.e_program + 0xc0, 这是 Ghidra 在 PE 头零页上误应用 IMAGE_DOS_HEADER 结构体类型造成的反编译伪影, 真实值
+第 2 个参数 DestMax 在反编译中显示为 `IMAGE_DOS_HEADER_00000000.e_program + 0xc0`，明显是是 Ghidra 在 PE 头零页上误应用 `IMAGE_DOS_HEADER` 结构体类型的伪影。 零页被认成了`IMAGE_DOS_HEADER`类型，导致使用了加法的偏移量表示而不是直接的立即数。但是即便知道是伪影，它的目的和真实值也让NCC找了不短的时间，因为不确定到底是临时放变量的垃圾场，还是说赋值。最后捣腾发现确实是立即数， `0x40 + 0xc0 = 0x100` ，从汇编找到原因：
+
+```txt
+  LAB_0005f438         XREF[2]:              0005f420(j), 0005f42c(j)  
+0005f438  e0 03 13 aa               mov                   x0,x19
+0005f43c  95 8f fe 97                 bl     FUN_00003290                                                                                   
+0005f440  e3 03 00 aa               mov                   x3,x0
+0005f444  e0 23 00 91               add                    x0,sp,#0x8
+0005f448  01 20 80 52               mov                   w1,#0x100
+0005f44c  e2 03 13 aa               mov                   x2,x19
+0005f450  68 8d fe 97                bl                       FUN_000029f0 
+0005f454  28 05 00 f0                adrp                  x8,0x106000
+0005f458  e0 23 00 91               add                    x0,sp,#0x8
+0005f45c  08 f9 41 f9                 ldr                      x8,[x8, #0x3f0]=>DAT_001063f0
+0005f460  14 2d 40 f9                ldr                      x20,[x8, #0x58]
+0005f464  8b 8f fe 97                 bl                       FUN_00003290
+0005f468  47 0e 00 94               bl                       FUN_00062d84
+0005f46c  29 06 00 54               b.ls                    LAB_0005f530
+```
+（Ghidra煞笔格式，复制变量莫名加空格，复制汇编给我加二十几个Tab都删不完，要排得正常能看比自己手写还慢，CIA研发部门看来也渗透进印度人了）
+
+
+#### `FUN_000029f0` 函数确认为 `AsciiStrnCatS` 的定论
+对于代码：
+
+```c
+pcVar6 = param_1 + (long)puVar2;   // puVar2 from FUN_000024d8() = AsciiStrnLenS(Destination, DestMax)
+for (; (puVar4 != (undefined *)0x0 && (*param_3 != '\0')); param_3 = param_3 + 1)
+{
+    *pcVar6 = *param_3;
+    puVar4 = puVar4 + -1;
+    pcVar6 = pcVar6 + 1;
+}
+*pcVar6 = '\0';
+```
+
+NCC在edk2里面找到的最相近的片段是这个：
+```c
+Destination = Destination + DestLen;
+while ((SourceLen > 0) && (*Source != 0)) {
+  *(Destination++) = *(Source++);
+  SourceLen--;
+}
+*Destination = 0;
+```
+
+把 Source 从 Destination 现有字符串末尾开始追加，逐字节拷贝直到剩余空间用完或 source 结束。符合 AsciiStrnCatS 的语义，不是行为接近的 CopyMem。配合两次 `InternalSafeStringNoAsciiStrOverlap` 断言和 EDK2 路径 `SafeString.c` 行号 `0x84b`（2123 行）
+而且函数体里能看到 EDK2 SafeString.c 的路径字符串、`InternalSafeStringNoAsciiStrOverlap` 这个 assertion 字符串、(Length <= (_gPcd_FixedAtBuild_PcdMaximumAsciiStringLength)) 这条 PCD 检查，全是 EDK2 AsciiStrnCatS 的标志性元素。经过多次怀疑和修改的这个函数名可以完全确认。
+
+### 大图片
+![3.0.45ABL fastboot 参数注入总思维图](HyperOS_3.0.45_ABL_001.jpg)
+
 ## PS
 还未完成，但是先发出来了。
 //TODO 
 - 重新追 `GpuConfiguration` 读取侧去看cmdline具体拼接进行佐证。
-- 目前卡在Ghidra自动分析的 IMAGE_DOS_HEADER 这里，还原了字符串又查表，还上网查这个东西怎么会有`e.program` 属性。最终猜测它写的这个应该是纯数值`0x40` ，检查调用的 `000029f0` 经过比对应该是 `AsciiStrnCatS` 函数
+- ABL init 的 FtwLite, VarCheck, VariableRuntimeDxe 检查是否NVRAM没有挂载，如果没挂NVRAM还把属性设置为7那就是左脑攻击右脑。
 - 对AI的吐槽：Claude全身敏感肌，没思路问问方向都不行。DeepSeekV4满口胡言乱语，在制表上帮了忙。Gemini不干活成天夸NCC观察力非常敏锐。GPT能力不行还保守。总的来说还是NCC好，就是太费NCC脑子了。
