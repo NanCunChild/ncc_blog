@@ -16,4 +16,4 @@ description: "和宝宝一起逛长沙和张家界！"
 
 同时在这里测试一个小作品，在流逝的时间中尝试保留一点点转瞬即逝的东西。
 
-{{< splat src="/love_items_modified_1.spz" height="500px" caption="和宝宝创造本次旅游回忆的物件" />}}
+{{< splat src="/love_items_modified_1.spz" height="500px" caption="和宝宝创造本次旅游回忆的物件" >}}
