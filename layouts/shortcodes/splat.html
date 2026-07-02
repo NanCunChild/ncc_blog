@@ -2,6 +2,9 @@
 {{- $width := .Get "width" | default "100%" -}}
 {{- $height := .Get "height" | default "500px" -}}
 {{- $caption := .Get "caption" | default "" -}}
+{{- $rotX := .Get "rotX" | default "180" -}}
+{{- $rotY := .Get "rotY" | default "0" -}}
+{{- $rotZ := .Get "rotZ" | default "0" -}}
 {{- $containerId := printf "splat-viewer-%d" .Ordinal -}}
 
 {{- if not (.Page.Store.Get "hasSplatImportmap") -}}
@@ -27,7 +30,7 @@
 <script type="module">
   import * as THREE from "three";
   import { SparkRenderer, SplatMesh } from "@sparkjsdev/spark";
-  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+  import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 
   (() => {
     const container = document.getElementById("{{ $containerId }}");
@@ -45,9 +48,12 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.08;
+    const controls = new TrackballControls(camera, renderer.domElement);
+    controls.rotateSpeed = 3.0;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 0.8;
+    controls.staticMoving = false;
+    controls.dynamicDampingFactor = 0.15;
     controls.target.set(0, 0, 0);
     controls.update();
 
@@ -56,6 +62,11 @@
 
     const splat = new SplatMesh({ url: "{{ $src | safeJS }}" });
     splat.position.set(0, 0, 0);
+    splat.rotation.set(
+      THREE.MathUtils.degToRad({{ $rotX }}),
+      THREE.MathUtils.degToRad({{ $rotY }}),
+      THREE.MathUtils.degToRad({{ $rotZ }})
+    );
     scene.add(splat);
 
     function animate() {
@@ -72,6 +83,7 @@
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      controls.handleResize();
     });
   })();
 </script>
