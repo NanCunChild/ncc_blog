@@ -23,6 +23,9 @@ defaultContentLanguageInSubdir = false
 
     defaultTheme = "auto"
 
+    codeBlockFoldLines = 15
+    customCSS = ["/css/code-fold.css"]
+
     [params.author]
         name = "NanCunChild"
         email = "nancunchild@gmail.com"

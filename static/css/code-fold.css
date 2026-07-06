@@ -1,0 +1,109 @@
+/* Code block folding */
+.code-block-wrapper {
+  position: relative;
+  margin: 0.5em 0 1.5em;
+}
+
+.code-block-wrapper pre {
+  margin: 0;
+}
+
+/* Collapsed: clamp height, fade overlay, bottom radius on toggle */
+.code-block-wrapper.collapsed pre {
+  max-height: 24em;
+  overflow: hidden;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Expanded: pre keeps its own bottom radius, toggle is separate */
+.code-block-wrapper.expanded pre {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Fade overlay - only visible when collapsed */
+.code-block-wrapper .code-block-fade {
+  display: none;
+  position: absolute;
+  bottom: 2.35em;
+  left: 0;
+  right: 0;
+  height: 3em;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, #3b3d42 90%);
+  z-index: 2;
+}
+
+.code-block-wrapper.collapsed .code-block-fade {
+  display: block;
+}
+
+/* Light theme fade */
+[data-theme=light] .code-block-wrapper .code-block-fade {
+  background: linear-gradient(to bottom, transparent, #eaeaea 90%);
+}
+
+@media (prefers-color-scheme: light) {
+  html:not([data-theme=dark]) .code-block-wrapper .code-block-fade {
+    background: linear-gradient(to bottom, transparent, #eaeaea 90%);
+  }
+}
+
+/* Toggle button */
+.code-block-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  width: 100%;
+  padding: 0.45em 1em 0.55em;
+  background: #3b3d42;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  color: #888;
+  font-size: 0.82em;
+  font-family: inherit;
+  border-radius: 0 0 0.5em 0.5em;
+  transition: color 0.15s, background 0.15s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.code-block-toggle:hover {
+  color: #ccc;
+}
+
+.code-block-toggle .toggle-icon {
+  font-size: 0.75em;
+  transition: transform 0.2s;
+}
+
+.code-block-wrapper.expanded .code-block-toggle .toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Light theme toggle */
+[data-theme=light] .code-block-toggle {
+  background: #eaeaea;
+  border-top-color: rgba(0, 0, 0, 0.08);
+  color: #777;
+}
+
+[data-theme=light] .code-block-toggle:hover {
+  color: #333;
+}
+
+@media (prefers-color-scheme: light) {
+  html:not([data-theme=dark]) .code-block-toggle {
+    background: #eaeaea;
+    border-top-color: rgba(0, 0, 0, 0.08);
+    color: #777;
+  }
+
+  html:not([data-theme=dark]) .code-block-toggle:hover {
+    color: #333;
+  }
+}
