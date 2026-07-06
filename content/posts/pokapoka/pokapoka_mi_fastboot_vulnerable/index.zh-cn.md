@@ -380,6 +380,7 @@ lVar1 = (*pcVar3)(L"GpuConfiguration",&DAT_000cb 3b4,7,user_input,buf_msg);
 | 0x70   | UpdateCapsule             | +8   |
 
 而根据 UEFI Spec 2.10 中关于 `SetVariable` 方法定义如下：
+
 ```
 EFI_STATUS SetVariable (
   IN     CHAR16     *VariableName,   // 变量名（UTF-16 字符串）
@@ -390,7 +391,6 @@ EFI_STATUS SetVariable (
 );
 ```
 
-
 对于代码：
 
 ```c
@@ -399,7 +399,7 @@ FUN_000029f0(acStack_168,IMAGE_DOS_HEADER_00000000.e_program + 0xc0,(char *)unaf
 
 反编译显示 handler 调用 `AsciiStrnCatS(buf_msg, DestMax, user_input, AsciiStrLen(user_input))` 。 该函数即 EDK2 SafeString 库中的标准实现，4 参数，语义是: 实际拷贝字节数 = `min(Length, DestMax - AsciiStrLen(Destination) - 1)`
 
-第 2 个参数 DestMax 在反编译中显示为 `IMAGE_DOS_HEADER_00000000.e_program + 0xc0`，明显是是 Ghidra 在 PE 头零页上误应用 `IMAGE_DOS_HEADER` 结构体类型的伪影。 零页被认成了`IMAGE_DOS_HEADER`类型，导致使用了加法的偏移量表示而不是直接的立即数。但是即便知道是伪影，它的目的和真实值也让NCC找了不短的时间，因为不确定到底是临时放变量的垃圾场，还是说赋值。最后捣腾发现确实是立即数， `0x40 + 0xc0 = 0x100` ，从汇编找到原因：
+第 2 个参数 DestMax 在反编译中显示为 `IMAGE_DOS_HEADER_00000000.e_program + 0xc0`，应为 Ghidra 在 PE 头零页上误应用 `IMAGE_DOS_HEADER` 结构体类型的伪影。 零页被认成了`IMAGE_DOS_HEADER`类型，导致使用了加法的偏移量表示而不是直接的立即数。但是即便知道是伪影，它的目的和真实值也让NCC找了不短的时间，因为不确定到底是临时放变量的垃圾场，还是说赋值。最后捣腾发现确实是立即数， `0x40 + 0xc0 = 0x100` ，从汇编找到原因：
 
 ```txt
   LAB_0005f438         XREF[2]:              0005f420(j), 0005f42c(j)  
@@ -420,6 +420,12 @@ FUN_000029f0(acStack_168,IMAGE_DOS_HEADER_00000000.e_program + 0xc0,(char *)unaf
 ```
 （Ghidra煞笔格式，复制变量莫名加空格，复制汇编给我加二十几个Tab都删不完，要排得正常能看比自己手写还慢，CIA研发部门看来也渗透进印度人了）
 
+在设置全局变量之后，读取侧也使用 `GetVariable` 进行读取。`diff_analyze/notes.txt:2030` 有 `DAT_001063f0 + 0x48` 调用，按布局是 `GetVariable(L"GpuConfiguration", &DAT_000cb3b4, ...)`
+
+读取成功后，数据落到 `DAT_001074a8`，随后在 `notes.txt:2865` 通过 `FUN_0000284c(pcVar50, puVar62, &DAT_001074a8)` 追加进最终 cmdline。
+
+`FUN_0000284c` 的调用形态与前后大量 " androidboot.xxx=" 拼接一致，应是 AsciiStrCatS/AsciiStrnCatS 一类追加函数。而且从这个漏洞来看也确实是直接追加。
+
 
 #### `FUN_000029f0` 函数确认为 `AsciiStrnCatS` 的定论
 对于代码：
@@ -435,7 +441,7 @@ for (; (puVar4 != (undefined *)0x0 && (*param_3 != '\0')); param_3 = param_3 + 1
 *pcVar6 = '\0';
 ```
 
-NCC在edk2里面找到的最相近的片段是这个：
+NCC在edk2里面找到的最相近的片段是这个（我的眼睛不中了）：
 ```c
 Destination = Destination + DestLen;
 while ((SourceLen > 0) && (*Source != 0)) {
@@ -445,15 +451,46 @@ while ((SourceLen > 0) && (*Source != 0)) {
 *Destination = 0;
 ```
 
-把 Source 从 Destination 现有字符串末尾开始追加，逐字节拷贝直到剩余空间用完或 source 结束。符合 AsciiStrnCatS 的语义，不是行为接近的 CopyMem。配合两次 `InternalSafeStringNoAsciiStrOverlap` 断言和 EDK2 路径 `SafeString.c` 行号 `0x84b`（2123 行）
+把 Source 从 Destination 现有字符串末尾开始追加，逐字节拷贝直到剩余空间用完或 source 结束。符合 `AsciiStrnCatS` 的语义，不是行为接近的 `CopyMem`。配合两次 `InternalSafeStringNoAsciiStrOverlap` 断言和 EDK2 路径 `SafeString.c` 行号 `0x84b`（2123 行）
 而且函数体里能看到 EDK2 SafeString.c 的路径字符串、`InternalSafeStringNoAsciiStrOverlap` 这个 assertion 字符串、(Length <= (_gPcd_FixedAtBuild_PcdMaximumAsciiStringLength)) 这条 PCD 检查，全是 EDK2 AsciiStrnCatS 的标志性元素。经过多次怀疑和修改的这个函数名可以完全确认。
+
+#### 注入上限测试
+
+使用大量数组写入内容，尝试找到边界，实验结果如下：
+```
+// fastboot oem set-gpu-preemption 0 INJECTED=yes  已经足够，不能加value
+
+
+❯ fastboot oem set-gpu-preemption 0 AAA。。。
+
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA （39个）
+
+❯ fastboot oem set-gpu-preemption-value 0 BBBBB。。。
+ 
+msm_kgsl.preempt_enable=-value
+0
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB  （33个）
+
+❯ fastboot oem set-gpu-preemption CCC。。。
+
+msm_kgsl.preempt_enable=CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC （41个）
+```
+
+好奇怪的数字，查找 `SetVariable` 等方法都匹配不上这个数字，后续字符串截取和复制的上限是256更是不可能。
+
+后续查到了资料，fastboot协议指令缓冲区本身有64字节大小限制。"oem set-gpu-preemption" 长度是 22 （fastboot不算入在内，同时注意万事之后有个空格算一个） ，直接 64-22-1=41 。
+
+同时这个能同时匹配上`set-gpu-preemption-value`和`set-gpu-preemption`就很怪，底层应该从前往后逐字节对比，对上了直接扔给指令分支，这样很不好，天知道什么时候你的一些指令前缀一样就跑飞了。
+
+此外，还有一处地方很奇怪。ABL init 的 FtwLite, VarCheck, VariableRuntimeDxe 在使用 `SetVariable` 方法时，启用了持久化标志，但是实际上重启之后设备就会变成修改之前的样子，看起来NVRAM没有起作用。猜测是后端压根没挂载NVRAM ，所以这个方法不能持久化任何变量（为什么会有人这么干）。
 
 ### 大图片
 ![3.0.45ABL fastboot 参数注入总思维图](HyperOS_3.0.45_ABL_001.jpg)
 
-## PS
-还未完成，但是先发出来了。
-//TODO 
-- 重新追 `GpuConfiguration` 读取侧去看cmdline具体拼接进行佐证。
-- ABL init 的 FtwLite, VarCheck, VariableRuntimeDxe 检查是否NVRAM没有挂载，如果没挂NVRAM还把属性设置为7那就是左脑攻击右脑。
-- 对AI的吐槽：Claude全身敏感肌，没思路问问方向都不行。DeepSeekV4满口胡言乱语，在制表上帮了忙。Gemini不干活成天夸NCC观察力非常敏锐。GPT能力不行还保守。总的来说还是NCC好，就是太费NCC脑子了。
+## 总结
+
+总的来说，就是一个简单的fastboot设计小问题，参数拼接错误。同时也暴露了小米在设计底层系统时急功近利缺少安全边界等一些其它的问题，甚至ABL固件里面也漏了私有构建路径，程序员名字都漏了。
+
+这个漏洞窗口期不长，但是已经成为“越狱”的主要来源。KernelSU已经推出了越狱功能，似乎是在SELinux被打死之后使用root做了某种操作，在system中解锁了BL锁。
+
+但是接下来需要讲的比单纯解锁BL锁更加强悍，本作第二篇是安全信任链崩溃的断链攻击。这导致可以在保留TEE密钥的情况下污染ABL之后的全部过程。
