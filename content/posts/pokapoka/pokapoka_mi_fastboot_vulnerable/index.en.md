@@ -502,6 +502,8 @@ On top of that, another thing is super sketchy. ABL init components like `FtwLit
 
 ### The Big Picture
 
+![3.0.45ABL fastboot Mindmap](HyperOS_3.0.45_ABL_001.jpg)
+
 ## Summary
 
 To wrap it up, this is basically a textbook fastboot design oversight—just a classic bad argument concatenation. It also exposes how rushed and sloppy Xiaomi's low-level system design is, completely lacking proper security boundaries. They even leaked private build paths and the developer's actual name inside the production ABL firmware. Talk about a rookie mistake.
