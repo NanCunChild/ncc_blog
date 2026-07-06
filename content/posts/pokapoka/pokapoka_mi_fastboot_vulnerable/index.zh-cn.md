@@ -344,6 +344,8 @@ AsciiStrCatS(buf_msg, 0x100, user_input, n);     // 把整个剩余串拼进 buf
 len = AsciiStrLen(user_input);
 if (len == 1) {                          //  整个剩余串长度必须正好是 1
     uVar3 = (*userinput & 0xfe) == 0x30; //  且必须是 '0' 或 '1'
+// ...
+}
 ```
 
 `0 androidboot.selinux=permissive` 的长度远不止 1，直接被 `if (len == 1)` 否决。即使只传 `fastboot oem set-gpu-preemption 0 androidboot...`，只要后面跟了空格和别的东西,`len` 就不是 1 一样进不去。
